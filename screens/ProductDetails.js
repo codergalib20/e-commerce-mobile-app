@@ -21,14 +21,16 @@ export default function ProductDetails({ route }) {
     <SafeAreaView>
       <ScrollView>
         <View style={styles.container}>
-          <Image source={{ uri: product.image }} style={styles.image} />
-        </View>
-        <View>
-          <View style={styles.titlebox}>
-            <Text style={styles.title}>{product.name}sdfsdfsdfsdfsdfsdfsdfsdddsd</Text>
-            <Text style={styles.price}>${product.price}</Text>
+          <View style={{ paddingVertical: 5 }}>
+            <Image source={{ uri: product.image }} style={styles.image} />
           </View>
-          <Text style={styles.description}>{product.description}</Text>
+          <View>
+            <View style={styles.titlebox}>
+              <Text style={styles.title}>{product.name}</Text>
+              <Text style={styles.price}>${product.price}</Text>
+            </View>
+            <Text style={styles.description}>{product.description}</Text>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -38,8 +40,7 @@ export default function ProductDetails({ route }) {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    paddingHorizontal: 20,
-    backgroundColor: "#fff",
+    paddingHorizontal: 10,
   },
   titlebox: {
     alignItems: "center",
@@ -49,10 +50,11 @@ const styles = StyleSheet.create({
     // Card Extra design
     borderRadius: 20,
     shadowColor: "#888",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 40,
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
     elevation: 3,
+    marginVertical: 5,
   },
   title: {
     fontSize: 20,
@@ -60,10 +62,17 @@ const styles = StyleSheet.create({
   },
   price: {
     fontSize: 20,
-    color: "#222",
+    color: "#e83a3b",
+    borderBottomColor: "#e83a3b",
+    borderBottomWidth: 2,
+    paddingHorizontal: 4,
   },
   image: {
     width: "100%",
     aspectRatio: 2,
+  },
+  description: {
+    marginTop: 10,
+    textAlign: "justify"
   },
 });

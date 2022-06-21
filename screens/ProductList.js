@@ -19,16 +19,19 @@ export default function ProductList({ navigation }) {
     setProducts(getProducts());
   }, []);
   return (
-    <View>
+    <View style={{ paddingHorizontal: 10 }}>
       <FlatList
         styles={styles.productList}
         contentContainerStyle={styles.contentContainerStyle}
         keyExtractor={(item) => item._id.toString()}
         data={products}
         renderItem={renderProduct}
+        showsVerticalScrollIndicator={false}
       ></FlatList>
     </View>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  contentContainerStyle: {},
+});
