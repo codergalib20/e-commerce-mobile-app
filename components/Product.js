@@ -2,7 +2,6 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 
 export default function Product({ product, onPress }) {
-  console.log(product.images[0].image);
   return (
     <TouchableOpacity style={styles.card} onPress={onPress}>
       <Text>{product.title} Hello</Text>
@@ -17,7 +16,7 @@ export default function Product({ product, onPress }) {
 const styles = StyleSheet.create({
   card: {
     width: "49%",
-    backgroundColor: "#FFF",
+    backgroundColor: "#FFF",  
     // Shadow
     shadowColor: "#1C424F",
     shadowOffset: {
@@ -30,6 +29,7 @@ const styles = StyleSheet.create({
     elevation: 6,
     padding: 5,
     borderRadius: 8,
+    marginTop: 10
   },
   image: {
     // width: 200,

@@ -36,52 +36,61 @@ export default function ProductList({ navigation }) {
   useEffect(() => {
     getProducts();
   }, []);
+  console.log(products.length);
   return (
-    <SafeAreaView style={{ backgroundColor: "#DFDFDE" }}>
-      <View>
-        <View style={styles.coustomHeader}>
-          <View style={styles.headerWrapper}>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <MaterialCommunityIcons
-                name="keyboard-backspace"
-                size={24}
-                color="#1C424F"
-              />
-            </View>
-            <Text style={styles.headerTitle}>Products</Text>
-            <View>
-              <FontAwesome name="search" size={20} color="#1C424F" />
-            </View>
+    <View>
+      {/* <FlatList
+        styles={styles.productList}
+        contentContainerStyle={styles.contentContainerStyle}
+        keyExtractor={(item) => item._id.toString()}
+        data={products}
+        renderItem={renderProduct}
+        showsVerticalScrollIndicator={false}
+      ></FlatList> */}
+      <View style={styles.coustomHeader}>
+        <View style={styles.headerWrapper}>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <MaterialCommunityIcons
+              name="keyboard-backspace"
+              size={24}
+              color="#1C424F"
+            />
+          </View>
+          <Text style={styles.headerTitle}>Products</Text>
+          <View>
+            <FontAwesome name="search" size={20} color="#1C424F" />
           </View>
         </View>
-        <View style={{ marginTop: 10 }}>
-          {products && (
-            <FlatList
-              columnWrapperStyle={{ justifyContent: "space-between" }}
-              contentContainerStyle={styles.contentContainerStyle}
-              numColumns={2}
-              keyExtractor={(item, index) => index}
-              data={products}
-              renderItem={renderProduct}
-              // showsVerticalScrollIndicator={false}
-              onEndReachedThreshold={0.5}
-            ></FlatList>
-          )}
-          {!products && isLoading && <Text>Loading</Text>}
-        </View>
       </View>
-    </SafeAreaView>
+      <View style={{ paddingTop: 76}}>
+        {products && (
+          <FlatList
+            columnWrapperStyle={{ justifyContent: "space-between" }}
+            contentContainerStyle={styles.contentContainerStyle}
+            numColumns={2}
+            keyExtractor={(item, index) => index}
+            data={products}
+            renderItem={renderProduct}
+            showsVerticalScrollIndicator={false}
+          ></FlatList>
+        )}
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   coustomHeader: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
     backgroundColor: "#FFF",
-    paddingTop: 30,
     paddingHorizontal: 10,
     paddingBottom: 20,
     borderBottomRightRadius: 30,
     borderBottomLeftRadius: 30,
+    paddingTop: 30,
     // Shadow
     shadowColor: "#1C424F",
     shadowOffset: {
@@ -105,6 +114,7 @@ const styles = StyleSheet.create({
   },
   contentContainerStyle: {
     paddingHorizontal: 10,
+    paddingBottom: 10
     // flex: 1,
     // flexGrow: 1,
   },
