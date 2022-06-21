@@ -1,9 +1,12 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import Product from "../components/Product";
-import axios from "axios";
+import { FontAwesome } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 
 export default function ProductList({ navigation }) {
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
   function renderProduct({ item: product }) {
     return (
       <Product
@@ -15,38 +18,65 @@ export default function ProductList({ navigation }) {
     );
   }
   const [products, setProducts] = useState([]);
-  // useEffect(() => {
-  //   // const response = axios.get("http://localhost:5000/api/product/products");
-  //   // console.log(response);
-
-  const getPost = async () => {
+  const getProducts = async () => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/product/products"
+        "https://e-commerce-l.herokuapp.com/api/product/products"
       );
-      const mydata = await response.json();
-      console.log(mydata);
+      const productsdata = await response.json();
+      setProducts(productsdata.data);
+      setIsLoading(false);
+      setError("");
     } catch (error) {
       console.log(error);
+      setError(error.message);
+      isLoading(false);
     }
   };
   useEffect(() => {
-    getPost();
+    getProducts();
   }, []);
   return (
-    <View style={{ paddingHorizontal: 10 }}>
-      {/* <FlatList
-        styles={styles.productList}
-        contentContainerStyle={styles.contentContainerStyle}
-        keyExtractor={(item) => item._id.toString()}
-        data={products}
-        renderItem={renderProduct}
-        showsVerticalScrollIndicator={false}
-      ></FlatList> */}
-    </View>
+    <SafeAreaView style={{ backgroundColor: "#DFDFDE", flex: 1 }}>
+      <View>
+        <View style={styles.coustomHeader}>
+          <View style={styles.headerWrapper}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Entypo name="dots-three-vertical" size={24} color="black" />
+              <Entypo name="dots-three-vertical" size={24} color="black" />
+            </View>
+            <Text>Products</Text>
+            <View>
+              <FontAwesome name="search" size={24} color="black" />
+            </View>
+          </View>
+        </View>
+        <View>
+          {products && (
+            <FlatList
+              styles={styles.productList}
+              contentContainerStyle={styles.contentContainerStyle}
+              keyExtractor={(item) => item._id}
+              data={products}
+              renderItem={renderProduct}
+              showsVerticalScrollIndicator={false}
+            ></FlatList>
+          )}
+          {!products && isLoading && <Text>Loading</Text>}
+        </View>
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  coustomHeader: {
+    backgroundColor: "#FFF",
+  },
+  headerWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
   contentContainerStyle: {},
 });
