@@ -4,6 +4,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ProductList from "./screens/ProductList";
 import ProductDetails from "./screens/ProductDetails";
+import * as Network from 'expo-network';
+
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
