@@ -2,7 +2,7 @@ import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import Product from "../components/Product";
 import { FontAwesome } from "@expo/vector-icons";
-import { Entypo } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function ProductList({ navigation }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -10,7 +10,7 @@ export default function ProductList({ navigation }) {
   function renderProduct({ item: product }) {
     return (
       <Product
-        {...product}
+        product={product}
         onPress={() => {
           navigation.navigate("ProductDetails", { productId: product._id });
         }}
@@ -37,29 +37,34 @@ export default function ProductList({ navigation }) {
     getProducts();
   }, []);
   return (
-    <SafeAreaView style={{ backgroundColor: "#DFDFDE", flex: 1 }}>
+    <SafeAreaView style={{ backgroundColor: "#DFDFDE" }}>
       <View>
         <View style={styles.coustomHeader}>
           <View style={styles.headerWrapper}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Entypo name="dots-three-vertical" size={24} color="black" />
-              <Entypo name="dots-three-vertical" size={24} color="black" />
+              <MaterialCommunityIcons
+                name="keyboard-backspace"
+                size={24}
+                color="#1C424F"
+              />
             </View>
-            <Text>Products</Text>
+            <Text style={styles.headerTitle}>Products</Text>
             <View>
-              <FontAwesome name="search" size={24} color="black" />
+              <FontAwesome name="search" size={20} color="#1C424F" />
             </View>
           </View>
         </View>
-        <View>
+        <View style={{ marginTop: 10 }}>
           {products && (
             <FlatList
-              styles={styles.productList}
+              columnWrapperStyle={{ justifyContent: "space-between" }}
               contentContainerStyle={styles.contentContainerStyle}
-              keyExtractor={(item) => item._id}
+              numColumns={2}
+              keyExtractor={(item, index) => index}
               data={products}
               renderItem={renderProduct}
-              showsVerticalScrollIndicator={false}
+              // showsVerticalScrollIndicator={false}
+              onEndReachedThreshold={0.5}
             ></FlatList>
           )}
           {!products && isLoading && <Text>Loading</Text>}
@@ -72,11 +77,35 @@ export default function ProductList({ navigation }) {
 const styles = StyleSheet.create({
   coustomHeader: {
     backgroundColor: "#FFF",
+    paddingTop: 30,
+    paddingHorizontal: 10,
+    paddingBottom: 20,
+    borderBottomRightRadius: 30,
+    borderBottomLeftRadius: 30,
+    // Shadow
+    shadowColor: "#1C424F",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    elevation: 6,
+  },
+  headerTitle: {
+    fontSize: 20,
+    color: "#1C424F",
+    fontWeight: "700",
+    textTransform: "uppercase",
   },
   headerWrapper: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
   },
-  contentContainerStyle: {},
+  contentContainerStyle: {
+    paddingHorizontal: 10,
+    // flex: 1,
+    // flexGrow: 1,
+  },
 });
